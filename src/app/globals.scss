@@ -1,0 +1,12 @@
+@use "sass:meta";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@include meta.load-css('../styles/main.scss');
+
+body {
+	color: var(--foreground);
+	background: var(--background);
+	font-family: var(--font-inter);
+}
