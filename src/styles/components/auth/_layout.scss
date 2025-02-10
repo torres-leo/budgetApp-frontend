@@ -6,7 +6,8 @@
 
 		&-design {
 			@apply bg-purple-900 py-10 relative;
-			@apply after:lg:bg-auth after:lg:z-10 after:lg:absolute after:lg:bg-no-repeat after:lg:bottom-0;
+			@apply lg:pt-32;
+			@apply after:lg:bg-auth after:lg:z-10 after:lg:absolute after:lg:bg-no-repeat after:lg:bottom-0 after:lg:left-0;
 			@apply after:lg:h-[500px] after:lg:w-[500px];
 			@apply after:xl:h-[650px] after:xl:w-[650px];
 			@apply after:2xl:h-[800px] after:2xl:w-[800px];
