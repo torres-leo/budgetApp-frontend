@@ -5,7 +5,7 @@ import SubmitButton from '../ui/SubmitButton';
 import { useFormState } from 'react-dom';
 import SuccessMessage from '../ui/SuccessMessage';
 import ErrorMessage from '../ui/ErrorMessage';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'nextjs-toast-notify';
 import { useRouter } from 'next/navigation';
 
@@ -15,10 +15,23 @@ export default function RegisterForm() {
 		success: '',
 		values: { email: '' },
 	};
+	const [generalError, setGeneralError] = useState('');
 	const [state, formAction, pending] = useFormState(registerUser, initialState);
 	const router = useRouter();
 
 	const ref = useRef<HTMLFormElement>(null);
+
+	useEffect(() => {
+		if (state.errors.general) {
+			setGeneralError(state.errors.general);
+
+			const timer = setTimeout(() => {
+				setGeneralError('');
+			}, 5000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [state.errors.general]);
 
 	useEffect(() => {
 		if (state.success) {
@@ -47,7 +60,7 @@ export default function RegisterForm() {
 			<div className='flex flex-col gap-2'>
 				<label className='font-bold text-2xl'>Name</label>
 				<input type='text' placeholder='John' className='w-full border border-gray-300 p-3 rounded-lg' name='name' />
-				{state.errors.name && <p className='text-red-500'>{state.errors.name[0]}</p>}
+				{state.errors.name && <ErrorMessage message={state.errors.name[0]} />}
 			</div>
 
 			<div className='flex flex-col gap-2'>
@@ -61,7 +74,7 @@ export default function RegisterForm() {
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='email'
 				/>
-				{state.errors.email && <p className='text-red-500'>{state.errors.email[0]}</p>}
+				{state.errors.email && <ErrorMessage message={state.errors.email[0]} />}
 			</div>
 
 			<div className='flex flex-col gap-2'>
@@ -72,7 +85,7 @@ export default function RegisterForm() {
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='password'
 				/>
-				{state.errors.password && <p className='text-red-500'>{state.errors.password[0]}</p>}
+				{state.errors.password && <ErrorMessage message={state.errors.password[0]} />}
 			</div>
 
 			<div className='flex flex-col gap-2'>
@@ -84,13 +97,18 @@ export default function RegisterForm() {
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='password_confirmation'
 				/>
-				{state.errors.password_confirmation && <p className='text-red-500'>{state.errors.password_confirmation[0]}</p>}
+				{state.errors.password_confirmation && <ErrorMessage message={state.errors.password_confirmation[0]} />}
 			</div>
 
 			<SubmitButton value='Sign Up' disabled={pending} />
 
 			{state.success && <SuccessMessage className='text-xl'>{state.success}</SuccessMessage>}
-			{state.errors.general && <ErrorMessage message={state.errors.general} />}
+			{generalError && (
+				<ErrorMessage
+					message={generalError}
+					className='text-center bg-red-600 p-2 rounded-lg text-white font-bold text-lg'
+				/>
+			)}
 		</form>
 	);
 }
