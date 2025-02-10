@@ -1,6 +1,6 @@
 'use client';
 
-import SubmitInput from '../ui/SubmitInput';
+import SubmitButton from '../ui/SubmitButton';
 
 export default function ForgotPasswordForm() {
 	return (
@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
 				/>
 			</div>
 
-			<SubmitInput value='Send Email' />
+			<SubmitButton value='Send Email' />
 		</form>
 	);
 }

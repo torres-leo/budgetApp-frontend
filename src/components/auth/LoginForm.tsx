@@ -1,8 +1,19 @@
 'use client';
 
-import SubmitInput from '../ui/SubmitInput';
+import { useState, useEffect } from 'react';
+import SubmitButton from '../ui/SubmitButton';
 
 export default function LoginForm() {
+	const [email, setEmail] = useState('');
+
+	useEffect(() => {
+		const storedEmail = sessionStorage.getItem('registeredEmail');
+		if (storedEmail) {
+			setEmail(storedEmail);
+			sessionStorage.removeItem('registeredEmail');
+		}
+	}, []);
+
 	return (
 		<form className='flex flex-col gap-y-8' noValidate>
 			<div className='flex flex-col gap-2'>
@@ -14,6 +25,9 @@ export default function LoginForm() {
 					placeholder='jonhdoe@example.com'
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='email'
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					autoFocus
 				/>
 			</div>
 
@@ -28,7 +42,7 @@ export default function LoginForm() {
 				/>
 			</div>
 
-			<SubmitInput value='Sign In' />
+			<SubmitButton value='Sign In' />
 		</form>
 	);
 }
