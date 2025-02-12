@@ -1,13 +1,14 @@
 'use client';
 
-import { registerUser } from '@/actions/create-account.action';
-import SubmitButton from '../ui/SubmitButton';
-import { useFormState } from 'react-dom';
-import SuccessMessage from '../ui/SuccessMessage';
-import ErrorMessage from '../ui/ErrorMessage';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'nextjs-toast-notify';
+import { useFormState } from 'react-dom';
 import { useRouter } from 'next/navigation';
+
+import { toast } from 'react-toastify';
+import { registerUser } from '@/actions/create-account.action';
+import ErrorMessage from '../ui/ErrorMessage';
+import SubmitButton from '../ui/SubmitButton';
+import SuccessMessage from '../ui/SuccessMessage';
 
 export default function RegisterForm() {
 	const initialState = {
@@ -36,11 +37,9 @@ export default function RegisterForm() {
 	useEffect(() => {
 		if (state.success) {
 			toast.success('User created succesfully', {
-				duration: 5000,
-				progress: true,
-				position: 'bottom-center',
-				transition: 'bounceIn',
-				sound: true,
+				onClose: () => {
+					router.push('/auth/login');
+				},
 			});
 
 			if (state.values?.email) {
@@ -48,10 +47,6 @@ export default function RegisterForm() {
 			}
 
 			ref.current?.reset();
-
-			setTimeout(() => {
-				router.push('/auth/login');
-			}, 2500);
 		}
 	}, [state.success]);
 
