@@ -3,8 +3,19 @@
 import { useState, useEffect } from 'react';
 import SubmitButton from '../ui/SubmitButton';
 
+import { authenticateUser } from '@/actions/authenticate-user.action';
+import { useFormState } from 'react-dom';
+import ErrorMessage from '../ui/ErrorMessage';
+import { toast } from 'react-toastify';
+
 export default function LoginForm() {
 	const [email, setEmail] = useState('');
+
+	const initialState = {
+		errors: { email: [], password: [], message: '' },
+	};
+
+	const [state, formAction] = useFormState(authenticateUser, initialState);
 
 	useEffect(() => {
 		const storedEmail = sessionStorage.getItem('registeredEmail');
@@ -14,21 +25,28 @@ export default function LoginForm() {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (state.errors.message) {
+			toast.error(state.errors.message);
+		}
+	}, [state.errors]);
+
 	return (
-		<form className='flex flex-col gap-y-8' noValidate>
+		<form className='flex flex-col gap-y-8' action={formAction} noValidate>
 			<div className='flex flex-col gap-2'>
 				<label className='font-bold text-2xl'>Email</label>
 
 				<input
 					id='email'
 					type='email'
-					placeholder='jonhdoe@example.com'
+					placeholder='johndoe@example.com'
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='email'
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					autoFocus
 				/>
+				{state.errors.email && <ErrorMessage message={state.errors.email[0]} />}
 			</div>
 
 			<div className='flex flex-col gap-2'>
@@ -40,6 +58,7 @@ export default function LoginForm() {
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='password'
 				/>
+				{state.errors.password && <ErrorMessage message={state.errors.password[0]} />}
 			</div>
 
 			<SubmitButton value='Sign In' />

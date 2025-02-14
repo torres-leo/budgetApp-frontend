@@ -1,0 +1,7 @@
+@layer components {
+	.dropdown {
+		@apply inline-flex items-center gap-x-1 text-sm font-semibold leading-6 p-0.5 rounded-lg bg-transparent border border-yellow-500 transition-all duration-150;
+		@apply hover:bg-white/10;
+		@apply focus-within:bg-amber-500;
+	}
+}
