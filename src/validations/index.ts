@@ -12,9 +12,21 @@ export const registerSchema = z
 		path: ['password_confirmation'],
 	});
 
+export const tokenSchema = z.string({ message: 'Invalid token' }).length(6, { message: 'Invalid token' });
+
+export const LoginSchema = z.object({
+	email: z.string().min(1, { message: 'Type a valid email' }).email({ message: 'Invalid email' }),
+	password: z.string().min(8, { message: 'Type a valid password' }),
+});
+
 export const SuccessSchema = z.string();
 export const ErrorResponseSchema = z.object({
 	message: z.string(),
 });
+export const UserSchema = z.object({
+	id: z.number(),
+	name: z.string(),
+	email: z.string().email(),
+});
 
-export const tokenSchema = z.string({ message: 'Invalid token' }).length(6, { message: 'Invalid token' });
+export type User = z.infer<typeof UserSchema>;

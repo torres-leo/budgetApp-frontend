@@ -10,7 +10,7 @@ export default function ForgotPasswordForm() {
 
 				<input
 					type='email'
-					placeholder='jonhdoe@example.com'
+					placeholder='johndoe@example.com'
 					className='w-full border border-gray-300 p-3 rounded-lg'
 					name='email'
 				/>

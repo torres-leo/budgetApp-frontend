@@ -14,7 +14,7 @@ function AuthLayout({ children }: Props) {
 					<Logo />
 				</div>
 
-				<div className='p-5 pt-10 max-w-4xl'>{children}</div>
+				<div className='p-5 pt-10 w-full 2xl:max-w-6xl 2xl:mx-auto'>{children}</div>
 			</div>
 
 			<ToastNotify />
