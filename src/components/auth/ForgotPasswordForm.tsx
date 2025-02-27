@@ -47,7 +47,7 @@ export default function ForgotPasswordForm() {
 				)}
 			</div>
 
-			<Loader />
+			<Loader type='ring2' />
 
 			<SubmitButton value='Send Email' />
 		</form>

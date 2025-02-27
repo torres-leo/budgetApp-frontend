@@ -1,20 +1,32 @@
 'use client';
 
+import { useFormStatus } from 'react-dom';
+import Loader from './Loader';
+
 interface Props {
 	value: string;
 	className?: string;
-	disabled?: boolean;
+	placeholderLoading?: string;
 }
 
-function SubmitButton({ value, className, disabled }: Props) {
+function SubmitButton({ value, className, placeholderLoading = 'Loading' }: Props) {
+	const { pending } = useFormStatus();
+
 	return (
 		<button
 			type='submit'
-			className={`bg-purple-900 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-bold text-xl cursor-pointer block ${
+			className={`bg-purple-900 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-semibold text-xl cursor-pointer inline-flex items-center justify-center gap-x-1.5 ${
 				className ?? ''
 			} disabled:cursor-not-allowed disabled:opacity-70`}
-			disabled={disabled}>
-			{value}
+			disabled={pending}>
+			{!pending ? (
+				value
+			) : (
+				<>
+					{placeholderLoading}
+					<Loader type='ring2' color='white' size='25' />
+				</>
+			)}
 		</button>
 	);
 }

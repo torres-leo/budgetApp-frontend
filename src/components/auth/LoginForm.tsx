@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SubmitButton from '../ui/SubmitButton';
 
+import { toast } from 'react-toastify';
 import { authenticateUser } from '@/actions/authenticate-user.action';
 import { useFormState } from 'react-dom';
 import ErrorMessage from '../ui/ErrorMessage';
-import { toast } from 'react-toastify';
+import SubmitButton from '../ui/SubmitButton';
 
 export default function LoginForm() {
 	const [email, setEmail] = useState('');
@@ -29,7 +29,7 @@ export default function LoginForm() {
 		if (state.errors.message) {
 			toast.error(state.errors.message);
 		}
-	}, [state.errors]);
+	}, [state]);
 
 	return (
 		<form className='flex flex-col gap-y-8' action={formAction} noValidate>
@@ -48,7 +48,6 @@ export default function LoginForm() {
 				/>
 				{state.errors.email && <ErrorMessage message={state.errors.email[0]} />}
 			</div>
-
 			<div className='flex flex-col gap-2'>
 				<label className='font-bold text-2xl'>Password</label>
 
@@ -61,7 +60,7 @@ export default function LoginForm() {
 				{state.errors.password && <ErrorMessage message={state.errors.password[0]} />}
 			</div>
 
-			<SubmitButton value='Sign In' />
+			<SubmitButton value='Sign In' className='inline-flex items-center justify-center gap-x-2' />
 		</form>
 	);
 }

@@ -1,5 +1,5 @@
-import { verifySession } from '@/auth/dal';
 import Link from 'next/link';
+import { verifySession } from '@/auth/dal';
 
 import AdminMenu from '@/components/admin/AdminMenu';
 import Logo from '@/components/ui/Logo';
@@ -25,15 +25,15 @@ export default async function AdminLayout({
 					<AdminMenu user={user} />
 				</div>
 			</header>
-			<section className='max-w-5xl mx-auto mt-20 p-3 py-10'>{children}</section>
+
+			<main className='max-w-5xl mx-auto p-3'>{children}</main>
+
 			<ToastNotify />
 
 			<footer className='py-5 bg-black'>
-				<>
-					<Logo iconSize='sm' textClasses='text-sm' separation='gap-x-1' />
-				</>
+				<Logo iconSize='sm' textClasses='text-sm' separation='gap-x-1' />
 				<p className='text-center text-white text-sm'>&copy; All rights reserved</p>
-				<p className='text-center text-white text-sm'>{new Date().getFullYear()}</p>
+				<p className='text-center text-white text-xs'>{new Date().getFullYear()}</p>
 			</footer>
 		</>
 	);
