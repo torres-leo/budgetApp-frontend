@@ -1,4 +1,5 @@
 export const privateLinks = {
-	admin: '/admin',
-	createBudget: '/budget/new',
+  admin: '/admin',
+  budgets: '/admin/budgets',
+  createBudget: '/admin/budgets/new',
 };

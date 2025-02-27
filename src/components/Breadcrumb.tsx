@@ -7,7 +7,6 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
-import { ReactNode } from 'react';
 
 export type BreadcrumbElements = {
   text: string;
@@ -38,7 +37,7 @@ function BreadcrumbComponent({ items }: BreadcrumbProps) {
               <>{text}</>
             )}
           </BreadcrumbItem>
-          {!isLastItem && <BreadcrumbSeparator />}
+          {!isLastItem && <BreadcrumbSeparator key={`breadcrumb-separator-${index}`} />}
         </>
       );
     });
