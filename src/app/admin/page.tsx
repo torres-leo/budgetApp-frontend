@@ -2,10 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { privateLinks } from '@/data/privateLinks';
 import { getUserBudgets } from '@/lib/get-user-budgets';
-import { formatCurrency, formatDate } from '@/utils';
-import BudgetMenu from '@/components/budgets/BudgetMenu';
+import { privateLinks } from '@/data/privateLinks';
+import BudgetElementList from '@/components/budgets/BudgetElementList';
 
 export const metadata: Metadata = {
   title: 'BudgetApp | Budgets',
@@ -28,30 +27,7 @@ export async function AdminPage() {
       )
     }
 
-    return budgets.map((budget, idx) => (
-      <li key={budget.id + idx} className="flex justify-between gap-x-6 py-4 px-5 hover:bg-gray-50">
-        <div className="flex min-w-0 gap-x-4">
-          <div className="min-w-0 flex-auto space-y-2">
-            <p className="text-2xl font-bold leading-6 text-gray-900">
-              <Link href={`${privateLinks.budgets}/${budget.id}`} >
-                {budget.name}
-              </Link>
-            </p>
-            <p className="text-lg font-bold text-amber-500">
-              {formatCurrency(Number(budget.amount))}
-            </p>
-            <p className='text-gray-500  text-sm'>
-              Last update: {''}
-              <span className='font-bold'>{formatDate(budget.updatedAt)}</span>
-            </p>
-          </div>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-x-6">
-          <BudgetMenu budgetId={budget.id} />
-        </div>
-      </li>
-    ))
+    return budgets.map((budget, idx) => <BudgetElementList budget={budget} key={`budget-${idx}-${crypto.randomUUID()}`} />)
   }
 
   return (
