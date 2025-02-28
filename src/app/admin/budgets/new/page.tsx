@@ -3,7 +3,7 @@ import { IoArrowBackCircle } from 'react-icons/io5';
 
 import { privateLinks } from '@/data/privateLinks';
 import BreadcrumbComponent from '@/components/Breadcrumb';
-import CreateBudgetForm from '@/components/budgets/CreateBudgetForm';
+import BudgetForm from '@/components/budgets/BudgetForm';
 import type { BreadcrumbElements } from '@/components/Breadcrumb';
 
 const breadcrumbElements: BreadcrumbElements[] = [
@@ -35,7 +35,7 @@ function NewBudgetPage() {
       </section>
 
       <div className='p-10 mt-10  shadow-lg border '>
-        <CreateBudgetForm />
+        <BudgetForm />
       </div>
     </>
   );

@@ -1,15 +1,22 @@
 'use client';
 
-import { createBudget } from '@/actions/budgets/create-budget.action';
-import { useFormState } from 'react-dom';
-import SubmitButton from '../ui/SubmitButton';
-import ErrorMessage from '../ui/ErrorMessage';
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
+import { useFormState } from 'react-dom';
 import { useRouter } from 'next/navigation';
-import { privateLinks } from '@/data/privateLinks';
+import { toast } from 'react-toastify';
 
-export default function CreateBudgetForm() {
+import { Budget } from '@/types/budgets';
+import { createBudget } from '@/actions/budgets/create-budget.action';
+import { editBudget } from '@/actions/budgets/edit-budget.action';
+import { privateLinks } from '@/data/privateLinks';
+import ErrorMessage from '../ui/ErrorMessage';
+import SubmitButton from '../ui/SubmitButton';
+
+type StateForm = {
+  budget?: Budget
+}
+
+export default function BudgetForm({ budget }: StateForm) {
   const router = useRouter();
   const [formValues, setFormValues] = useState({
     name: '',
@@ -21,7 +28,8 @@ export default function CreateBudgetForm() {
     success: '',
   };
 
-  const [state, formAction] = useFormState(createBudget, initialState);
+  const formStateAction = budget ? editBudget.bind(null, budget.id) : createBudget;
+  const [state, formAction] = useFormState(formStateAction, initialState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,6 +38,12 @@ export default function CreateBudgetForm() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (budget) {
+      setFormValues({ name: budget.name, amount: budget.amount.toString() });
+    }
+  }, [budget]);
 
   useEffect(() => {
     if (state.errors) {
@@ -55,6 +69,7 @@ export default function CreateBudgetForm() {
     }
   }, [state]);
 
+
   return (
     <form className='space-y-3' noValidate action={formAction}>
       <div className='space-y-3'>
@@ -63,7 +78,7 @@ export default function CreateBudgetForm() {
         </label>
         <input
           id='name'
-          className='w-full p-3  border border-gray-100 bg-slate-100'
+          className='w-full p-3  border border-gray-100 bg-slate-100 font-medium'
           type='text'
           placeholder='eg: Gaming Setup'
           name='name'
@@ -81,7 +96,7 @@ export default function CreateBudgetForm() {
         <input
           type='number'
           id='amount'
-          className='w-full p-3  border border-gray-100 bg-slate-100'
+          className='w-full p-3  border border-gray-100 bg-slate-100 font-medium'
           placeholder='1200'
           name='amount'
           onChange={handleChange}
@@ -90,7 +105,9 @@ export default function CreateBudgetForm() {
         {state.errors.amount && <ErrorMessage message={state.errors.amount[0]} />}
       </div>
 
-      <SubmitButton value='Create Budget' placeholderLoading='Creating budget' />
+      <SubmitButton
+        value={`${budget ? "Update Budget" : "Create Budget"}`}
+        placeholderLoading={`${budget ? "Updating Budget" : "Creating Budget"}`} />
     </form>
   );
 }
