@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export async function AdminPage() {
-
   const budgets = await getUserBudgets()
 
   const showsUserBudgets = () => {
@@ -43,7 +42,7 @@ export async function AdminPage() {
 
         <Link
           href={privateLinks.createBudget}
-          className='bg-amber-500/90 hover:bg-amber-600/75 p-2 rounded-lg text-white font-bold w-full md:w-auto text-center transition-colors duration-100 inline-flex items-center gap-x-1'>
+          className='bg-amber-500/90 hover:bg-amber-600/75 py-2 px-4 rounded-lg text-white font-bold w-full md:w-auto text-center transition-colors duration-100 inline-flex items-center gap-x-1'>
           <FiPlusCircle />
           Add
         </Link>

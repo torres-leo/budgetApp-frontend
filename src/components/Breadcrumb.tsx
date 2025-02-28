@@ -1,3 +1,5 @@
+import React from 'react';
+import Link from 'next/link';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,7 +8,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import Link from 'next/link';
 
 export type BreadcrumbElements = {
   text: string;
@@ -25,8 +26,8 @@ function BreadcrumbComponent({ items }: BreadcrumbProps) {
       const isLastItem = index === items.length - 1;
 
       return (
-        <>
-          <BreadcrumbItem key={`breadcrumb-${index}`}>
+        <React.Fragment key={crypto.randomUUID()}>
+          <BreadcrumbItem >
             {currentPage ? (
               <BreadcrumbPage>{text}</BreadcrumbPage>
             ) : path ? (
@@ -37,8 +38,8 @@ function BreadcrumbComponent({ items }: BreadcrumbProps) {
               <>{text}</>
             )}
           </BreadcrumbItem>
-          {!isLastItem && <BreadcrumbSeparator key={`breadcrumb-separator-${index}`} />}
-        </>
+          {!isLastItem && <BreadcrumbSeparator />}
+        </React.Fragment>
       );
     });
   };
