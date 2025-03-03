@@ -61,11 +61,8 @@ export default function BudgetForm({ budget }: StateForm) {
 
     if (state.success) {
       setFormValues({ amount: '', name: '' });
-      toast.success(state.success, {
-        onClose: () => {
-          router.push(privateLinks.admin);
-        },
-      });
+      toast.success(state.success);
+      router.push(privateLinks.admin);
     }
   }, [state]);
 

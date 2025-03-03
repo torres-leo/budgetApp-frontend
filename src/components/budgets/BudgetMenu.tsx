@@ -1,15 +1,19 @@
 "use client"
 import { Fragment } from "react"
+import { useRouter } from "next/navigation";
 import Link from "next/link"
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
-import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
+
 import { Budget } from "@/types/budgets";
 import { privateLinks } from "@/data/privateLinks";
 
 export default function BudgetMenu({ budgetId }: { budgetId: Budget["id"] }) {
+  const router = useRouter()
+
   return (
     <Menu as="div" className="relative flex-none">
       <MenuButton className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
@@ -51,7 +55,7 @@ export default function BudgetMenu({ budgetId }: { budgetId: Budget["id"] }) {
               <button
                 type='button'
                 className='inline-flex items-center justify-center gap-x-2 px-3 py-1 text-sm leading-6 text-red-500 border rounded-md hover:bg-transparent transition-colors duration-200 font-medium hover:bg-red-100'
-                onClick={() => { }}
+                onClick={() => router.push(`?deleteBudget=${budgetId}`)}
               >
                 <MdDelete />
                 Delete
