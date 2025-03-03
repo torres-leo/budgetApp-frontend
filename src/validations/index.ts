@@ -38,6 +38,8 @@ export const DraftBudgetSchema = z.object({
   amount: z.coerce.number({ message: 'Amount is not valid' }).min(1, { message: 'Amount is not valid' }),
 });
 
+export const PasswordValidationSchema = z.string().min(8, { message: "Insert a valid password" })
+
 export const SuccessSchema = z.string();
 export const ErrorResponseSchema = z.object({
   message: z.string(),

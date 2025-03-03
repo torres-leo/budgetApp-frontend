@@ -5,6 +5,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { getUserBudgets } from '@/lib/get-user-budgets';
 import { privateLinks } from '@/data/privateLinks';
 import BudgetElementList from '@/components/budgets/BudgetElementList';
+import DeleteBudgetModal from '@/components/budgets/DeleteBudgetModal';
 
 export const metadata: Metadata = {
   title: 'BudgetApp | Budgets',
@@ -12,22 +13,40 @@ export const metadata: Metadata = {
 };
 
 export async function AdminPage() {
-  const budgets = await getUserBudgets()
+  const budgets = await getUserBudgets();
 
   const showsUserBudgets = () => {
     if (!budgets.length) {
       return (
-        <p className='font-semibold text-lg'>There&apos;s no budgets registered yet, {''}
-          <Link href={privateLinks.createBudget} className='text-amber-500 font-medium hover:underline hover:underline-offset-2'>
-            create one
-          </Link>
-          .
-        </p>
-      )
+        <div className='border p-3 shadow-lg'>
+          <p className='font-semibold text-lg text-center'>
+            There&apos;s no budgets registered yet, {''}
+            <Link
+              href={privateLinks.createBudget}
+              className='text-amber-500 font-medium hover:underline hover:underline-offset-2'>
+              create one
+            </Link>
+            .
+          </p>
+        </div>
+      );
     }
 
-    return budgets.map((budget, idx) => <BudgetElementList budget={budget} key={`budget-${idx}-${crypto.randomUUID()}`} />)
-  }
+    return (
+      <>
+        <ul
+          role='list'
+          className={`divide-y divide-gray-300 border shadow-lg ${!budgets.length ? 'py-5 flex flex-col justify-center items-center gap-y-1' : ''
+            }`}>
+          {budgets.map((budget, idx) => (
+            <BudgetElementList budget={budget} key={`budget-${idx}-${crypto.randomUUID()}`} />
+          ))}
+        </ul>
+
+        <DeleteBudgetModal />
+      </>
+    );
+  };
 
   return (
     <>
@@ -48,10 +67,7 @@ export async function AdminPage() {
         </Link>
       </div>
 
-      <ul role="list" className={`divide-y divide-gray-300 border shadow-lg ${!budgets.length ? "py-5 flex flex-col justify-center items-center gap-y-1" : ""}`}>
-        {showsUserBudgets()}
-      </ul>
-
+      {showsUserBudgets()}
     </>
   );
 }
