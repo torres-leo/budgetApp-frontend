@@ -11,6 +11,7 @@ import { editBudget } from '@/actions/budgets/edit-budget.action';
 import { privateLinks } from '@/data/privateLinks';
 import ErrorMessage from '../ui/ErrorMessage';
 import SubmitButton from '../ui/SubmitButton';
+import Link from 'next/link';
 
 type StateForm = {
   budget?: Budget
@@ -68,14 +69,14 @@ export default function BudgetForm({ budget }: StateForm) {
 
 
   return (
-    <form className='space-y-3' noValidate action={formAction}>
-      <div className='space-y-3'>
+    <form className='w-full relative' noValidate action={formAction}>
+      <div className='space-y-2 mb-3'>
         <label htmlFor='name' className='text-sm uppercase font-bold'>
           Budget Name
         </label>
         <input
           id='name'
-          className='w-full p-3  border border-gray-100 bg-slate-100 font-medium'
+          className='w-full p-3  border border-black/10 bg-slate-100 font-medium rounded-md'
           type='text'
           placeholder='eg: Gaming Setup'
           name='name'
@@ -86,14 +87,14 @@ export default function BudgetForm({ budget }: StateForm) {
         {state.errors.name && <ErrorMessage message={state.errors.name[0]} />}
       </div>
 
-      <div className='space-y-3'>
+      <div className='space-y-2 mb-5'>
         <label htmlFor='amount' className='text-sm uppercase font-bold'>
           Budget amount
         </label>
         <input
           type='number'
           id='amount'
-          className='w-full p-3  border border-gray-100 bg-slate-100 font-medium'
+          className='w-full p-3  border border-black/10 bg-slate-100 font-medium rounded-md'
           placeholder='1200'
           name='amount'
           onChange={handleChange}
@@ -102,9 +103,15 @@ export default function BudgetForm({ budget }: StateForm) {
         {state.errors.amount && <ErrorMessage message={state.errors.amount[0]} />}
       </div>
 
-      <SubmitButton
-        value={`${budget ? "Update Budget" : "Create Budget"}`}
-        placeholderLoading={`${budget ? "Updating Budget" : "Creating Budget"}`} />
+      <div className='flex justify-center items-center gap-x-5 w-full'>
+        <Link href={privateLinks.admin} className='w-full text-center bg-gray-100 hover:bg-gray-200 transition-colors duration-100 py-3 rounded-lg text-lg font-medium border border-black/20'>
+          Cancel
+        </Link>
+
+        <SubmitButton
+          value={`${budget ? "Update Budget" : "Create Budget"}`}
+          placeholderLoading={`${budget ? "Updating Budget" : "Creating Budget"}`} />
+      </div>
     </form>
   );
 }

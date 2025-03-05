@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { IoArrowBackCircle } from 'react-icons/io5'
 
-import { getBudgetById } from '@/lib/get-budget-by-id';
+import { getBudgetById } from '@/lib/get-budget';
 import { privateLinks } from '@/data/privateLinks';
 import BreadcrumbComponent, { BreadcrumbElements } from '@/components/Breadcrumb'
 import BudgetForm from '@/components/budgets/BudgetForm';
@@ -53,7 +53,7 @@ export async function EditBudgetPage({ params }: { params: { budgetId: string } 
       </div>
 
 
-      <div className='p-10 mt-10  shadow-lg border '>
+      <div className='p-10 mt-10 shadow-lg border rounded-md'>
         <BudgetForm budget={budget} />
       </div>
 
