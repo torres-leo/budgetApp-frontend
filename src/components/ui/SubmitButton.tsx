@@ -15,7 +15,7 @@ function SubmitButton({ value, className, placeholderLoading = 'Loading' }: Prop
   return (
     <button
       type='submit'
-      className={`bg-purple-900 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-semibold text-xl cursor-pointer inline-flex items-center justify-center gap-x-1.5 ${className ?? ''
+      className={`bg-purple-900 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-semibold text-lg cursor-pointer inline-flex items-center justify-center gap-x-1.5 border border-transparent ${className ?? ''
         } disabled:cursor-not-allowed disabled:opacity-70`}
       disabled={pending}>
       {!pending ? (
